@@ -1,74 +1,37 @@
-// Tema
-const temaBtn = document.getElementById("btnTema");
-
-if (localStorage.getItem("tema") === "escuro") {
-  document.body.classList.add("dark-mode");
-  temaBtn.textContent = "☀️ Tema Claro";
-}
-temaBtn.addEventListener("click", () => {
-  const escuro = document.body.classList.toggle("dark-mode");
-  temaBtn.style.color = escuro ? "white" : "black";
-  temaBtn.textContent = escuro ? "☀️ Tema Claro" : "🌙 Tema Escuro";
-  localStorage.setItem("tema", escuro ? "escuro" : "claro");
-});
-
-// Estoque
-let produtos = JSON.parse(localStorage.getItem("estoque")) || [];
-
-function salvar() {
-  localStorage.setItem("estoque", JSON.stringify(produtos));
-  render();
-}
-
-function render() {
-  const tabela = document.getElementById("tabelaProdutos");
-  tabela.innerHTML = "";
-
-  produtos.forEach((p, i) => {
-    const alerta = p.quantidade <= 2 ? 'style="color:red;"' : "";
-    tabela.innerHTML += `
-      <tr>
-        <td>${p.nome}</td>
-        <td ${alerta}>${p.quantidade}</td>
-        <td>
-          <button onclick="adicionar(${i})">➕</button>
-          <button onclick="remover(${i})">➖</button>
-          <button onclick="excluir(${i})" style="background-color: var(--danger); color: white;">🗑️</button>
-        </td>
-      </tr>
-    `;
-  });
-}
-
-function adicionar(index) {
-  produtos[index].quantidade++;
-  salvar();
-}
-
-function remover(index) {
-  if (produtos[index].quantidade > 0) {
-    produtos[index].quantidade--;
-    salvar();
-  }
-}
-
-function excluir(index) {
-  if (confirm("Deseja realmente excluir este produto?")) {
-    produtos.splice(index, 1);
-    salvar();
-  }
-}
-
-document.getElementById("formProduto").addEventListener("submit", function (e) {
-  e.preventDefault();
+function cadastrar() {
   const nome = document.getElementById("nome").value.trim();
-  const quantidade = parseInt(document.getElementById("quantidade").value);
+  const email = document.getElementById("email").value.trim();
+  const senha = document.getElementById("senha").value.trim();
 
-  if (!nome || isNaN(quantidade)) return;
+  if (!nome || !email || !senha) {
+    exibirMensagem("Preencha todos os campos!");
+    return;
+  }
 
-  produtos.push({ nome, quantidade });
-  salvar();
-  e.target.reset();
-});
+  const usuario = { nome, email, senha };
+  localStorage.setItem("usuario", JSON.stringify(usuario));
+  exibirMensagem("Cadastro realizado com sucesso!", true);
+}
 
-render();
+function logar() {
+  const email = document.getElementById("login-email").value.trim();
+  const senha = document.getElementById("login-senha").value.trim();
+  const usuarioSalvo = JSON.parse(localStorage.getItem("usuario"));
+
+  if (!usuarioSalvo) {
+    exibirMensagem("Nenhum usuário cadastrado.");
+    return;
+  }
+
+  if (usuarioSalvo.email === email && usuarioSalvo.senha === senha) {
+     window.location.href = "/pages/organiza.html";
+  } else {
+    exibirMensagem("Email ou senha incorretos.");
+  }
+}
+
+function exibirMensagem(msg, sucesso = false) {
+  const el = document.getElementById("mensagem");
+  el.style.color = sucesso ? "green" : "red";
+  el.innerText = msg;
+}

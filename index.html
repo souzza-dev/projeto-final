@@ -1,40 +1,44 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gerenciador de Estoque</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login e Cadastro</title>
   <link rel="stylesheet" href="/estilos/index.css" />
 </head>
 <body>
-  <div class="container">
-    <button id="btnTema">🌙 Tema Escuro</button>
-    <h1>📦 Organiza</h1>
 
-    <div class="card">
-      <h2>➕ Adicionar Produto</h2>
-      <form id="formProduto">
-        <input type="text" id="nome" placeholder="Nome do produto" required />
-        <input type="number" id="quantidade" placeholder="Quantidade" required />
-        <button type="submit" class="btn-primary">Adicionar</button>
-      </form>
-    </div>
-
-    <div class="card">
-      <h2>📋 Estoque Atual</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Produto</th>
-            <th>Quantidade</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody id="tabelaProdutos"></tbody>
-      </table>
-    </div>
+<div class="main-container">
+  <!-- Lado esquerdo com imagem -->
+  <div class="left-side">
+    <h2>Transforme seu negocio</h2>
+    <img src="imagens/organiza-ai.png" alt="Imagem decorativa" />
   </div>
 
-  <script src="/script/script.js"></script>
+  <!-- Lado direito com formulários -->
+  <div class="right-side">
+    <div class="form-container">
+
+      <!-- Login -->
+      <h2>Login</h2>
+      <input type="email" id="login-email" placeholder="Email" />
+      <input type="password" id="login-senha" placeholder="Senha" />
+      <button onclick="logar()">Entrar</button>
+
+      <hr />
+
+      <!-- Cadastro -->
+      <h2>Cadastro</h2>
+      <input type="text" id="nome" placeholder="Nome" />
+      <input type="email" id="email" placeholder="Email" />
+      <input type="password" id="senha" placeholder="Senha" />
+      <button onclick="cadastrar()">Cadastrar</button>
+
+      <div class="message" id="mensagem"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/script/script.js"></script>
 </body>
 </html>
