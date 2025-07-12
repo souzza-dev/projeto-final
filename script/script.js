@@ -24,7 +24,7 @@ function logar() {
   }
 
   if (usuarioSalvo.email === email && usuarioSalvo.senha === senha) {
-     window.location.href = "../pages/organiza.html";
+     window.location.href = "pages/organiza.html";
   } else {
     exibirMensagem("Email ou senha incorretos.");
   }
